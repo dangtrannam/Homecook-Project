@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="https://jakarta.ee/xml/ns/persistence/orm"
+                 version="3.0">
+
+    <entity class="dtos.AccountsDTO">
+        <table name="Accounts" schema="dbo" catalog="homecook"/>
+        <attributes>
+            <id name="userId">
+                <column name="UserID" precision="-1"/>
+            </id>
+            <basic name="username">
+                <column name="Username" length="20"/>
+            </basic>
+            <basic name="password">
+                <column name="Password" length="50"/>
+            </basic>
+            <basic name="email">
+                <column name="Email" length="50"/>
+            </basic>
+            <basic name="fullName">
+                <column name="FullName" length="50"/>
+            </basic>
+            <basic name="doB">
+                <column name="DoB" precision="-1"/>
+            </basic>
+            <basic name="address">
+                <column name="Address" length="100"/>
+            </basic>
+            <basic name="phoneNumber">
+                <column name="PhoneNumber" length="12"/>
+            </basic>
+            <basic name="isActive">
+                <column name="IsActive" precision="-1"/>
+            </basic>
+        </attributes>
+    </entity>
+</entity-mappings>

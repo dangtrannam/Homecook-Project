@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="https://jakarta.ee/xml/ns/persistence/orm"
+                 version="3.0">
+
+    <entity class="dtos.DishesDTO">
+        <table name="Dishes" schema="dbo" catalog="homecook"/>
+        <attributes>
+            <id name="dishId">
+                <column name="DishID" precision="-1"/>
+            </id>
+            <basic name="homeCookId">
+                <column name="HomeCookID" precision="-1"/>
+            </basic>
+            <basic name="dishName">
+                <column name="DishName" length="100"/>
+            </basic>
+            <basic name="price">
+                <column name="Price" precision="-1"/>
+            </basic>
+            <basic name="isAvailable">
+                <column name="IsAvailable" precision="-1"/>
+            </basic>
+            <basic name="description">
+                <column name="Description" nullable="false" length="300"/>
+            </basic>
+            <basic name="imageUrl">
+                <column name="ImageURL" length="100"/>
+            </basic>
+        </attributes>
+    </entity>
+</entity-mappings>

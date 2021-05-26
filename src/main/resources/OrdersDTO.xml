@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="https://jakarta.ee/xml/ns/persistence/orm"
+                 version="3.0">
+
+    <entity class="dtos.OrdersDTO">
+        <table name="Orders" schema="dbo" catalog="homecook"/>
+        <attributes>
+            <id name="orderId">
+                <column name="OrderID" precision="-1"/>
+            </id>
+            <basic name="timeStamp">
+                <column name="TimeStamp" precision="-1"/>
+            </basic>
+            <basic name="receiverPhone">
+                <column name="ReceiverPhone" length="12"/>
+            </basic>
+            <basic name="receiverAddress">
+                <column name="ReceiverAddress" length="120"/>
+            </basic>
+            <basic name="receiverName">
+                <column name="ReceiverName" length="50"/>
+            </basic>
+            <basic name="total">
+                <column name="Total" precision="-1"/>
+            </basic>
+            <basic name="note">
+                <column name="Note" nullable="false" length="200"/>
+            </basic>
+            <many-to-one name="accountsByHomeCookId" optional="true" target-entity="dtos.AccountsDTO">
+                <join-column name="HomeCookID" referenced-column-name="UserID"/>
+            </many-to-one>
+            <many-to-one name="accountsByCustomerId" optional="true" target-entity="dtos.AccountsDTO">
+                <join-column name="CustomerID" referenced-column-name="UserID"/>
+            </many-to-one>
+        </attributes>
+    </entity>
+</entity-mappings>

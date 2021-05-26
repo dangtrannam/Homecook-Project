@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="https://jakarta.ee/xml/ns/persistence/orm"
+                 version="3.0">
+
+    <entity class="dtos.MenusDTO">
+        <table name="Menus" schema="dbo" catalog="homecook"/>
+        <attributes>
+            <id name="menuId">
+                <column name="MenuID" precision="-1"/>
+            </id>
+            <basic name="menuName">
+                <column name="MenuName" length="100"/>
+            </basic>
+            <basic name="isServing">
+                <column name="IsServing" precision="-1"/>
+            </basic>
+            <many-to-one name="accountsByHomeCookId" optional="true" target-entity="dtos.AccountsDTO">
+                <join-column name="HomeCookID" referenced-column-name="UserID"/>
+            </many-to-one>
+        </attributes>
+    </entity>
+</entity-mappings>

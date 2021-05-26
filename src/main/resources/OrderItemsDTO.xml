@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="https://jakarta.ee/xml/ns/persistence/orm"
+                 version="3.0">
+
+    <entity class="dtos.OrderItemsDTO">
+        <table name="OrderItems" schema="dbo" catalog="homecook"/>
+        <attributes>
+            <id name="itemId">
+                <column name="ItemID" precision="-1"/>
+            </id>
+            <basic name="quantity">
+                <column name="Quantity" precision="-1"/>
+            </basic>
+            <basic name="note">
+                <column name="Note" nullable="false" length="200"/>
+            </basic>
+            <basic name="totalPrice">
+                <column name="TotalPrice" precision="-1"/>
+            </basic>
+            <many-to-one name="dishesByDishId" optional="true" target-entity="dtos.DishesDTO">
+                <join-column name="DishID" referenced-column-name="DishID"/>
+            </many-to-one>
+        </attributes>
+    </entity>
+</entity-mappings>

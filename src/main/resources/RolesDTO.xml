@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="https://jakarta.ee/xml/ns/persistence/orm"
+                 version="3.0">
+
+    <entity class="dtos.RolesDTO">
+        <table name="Roles" schema="dbo" catalog="homecook"/>
+        <attributes>
+            <id name="roleId">
+                <column name="RoleID" precision="-1"/>
+            </id>
+            <basic name="roleName">
+                <column name="RoleName" length="20"/>
+            </basic>
+        </attributes>
+    </entity>
+</entity-mappings>

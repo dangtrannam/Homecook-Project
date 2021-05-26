@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="https://jakarta.ee/xml/ns/persistence/orm"
+                 version="3.0">
+
+    <entity class="dtos.StatusDTO">
+        <table name="Status" schema="dbo" catalog="homecook"/>
+        <attributes>
+            <id name="statusId">
+                <column name="StatusID" precision="-1"/>
+            </id>
+            <basic name="status">
+                <column name="Status" length="20"/>
+            </basic>
+        </attributes>
+    </entity>
+</entity-mappings>

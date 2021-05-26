@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
+             version="2.2">
+    <persistence-unit name="default">
+
+        <mapping-file>AccountsDTO.xml</mapping-file>
+        <mapping-file>DishInDTO.xml</mapping-file>
+        <mapping-file>DishesDTO.xml</mapping-file>
+        <mapping-file>MenusDTO.xml</mapping-file>
+        <mapping-file>OrderItemsDTO.xml</mapping-file>
+        <mapping-file>OrdersDTO.xml</mapping-file>
+        <mapping-file>RolesDTO.xml</mapping-file>
+        <mapping-file>StatusDTO.xml</mapping-file>
+        <class>dtos.AccountsDTO</class>
+        <class>dtos.DishInDTO</class>
+        <class>dtos.DishesDTO</class>
+        <class>dtos.MenusDTO</class>
+        <class>dtos.OrderItemsDTO</class>
+        <class>dtos.OrdersDTO</class>
+        <class>dtos.RolesDTO</class>
+        <class>dtos.StatusDTO</class>
+        <properties>
+            <property name="hibernate.connection.url"
+                      value="jdbc:sqlserver://homecook.database.windows.net:1433;database=homecook"/>
+            <property name="hibernate.connection.driver_class" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
+        </properties>
+    </persistence-unit>
+</persistence>
