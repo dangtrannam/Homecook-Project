@@ -3,6 +3,8 @@ package dtos;
 import javax.persistence.*;
 import java.sql.Date;
 
+enum statusCode {Pending, Approved, Rejected, Cancel, Delivered, Delivering};
+
 @Entity
 @Table(name = "Orders", schema = "dbo", catalog = "homecook")
 public class OrdersDTO {
@@ -15,6 +17,7 @@ public class OrdersDTO {
     private String note;
     private AccountsDTO accountsByHomeCookId;
     private AccountsDTO accountsByCustomerId;
+    private statusCode status;
 
     @Id
     @Column(name = "OrderID", nullable = false)
