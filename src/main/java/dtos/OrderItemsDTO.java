@@ -24,8 +24,8 @@ public class OrderItemsDTO {
 
     @Basic
     @Column(name = "OrderID", nullable = false)
-    public int getOrderID -> orderID;
-    public void setOrderId(int orderID) -> {this.orderID = orderID};
+    public int getOrderID(){return this.orderID;}
+    public void setOrderID(int orderID) {this.orderID = orderID;}
     
     @Basic
     @Column(name = "Quantity", nullable = false)
