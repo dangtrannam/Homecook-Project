@@ -15,6 +15,7 @@ public class OrdersDTO {
     private String receiverName;
     private double total;
     private String note;
+    private int statusID;
     private AccountsDTO accountsByHomeCookId;
     private AccountsDTO accountsByCustomerId;
     private statusCode status;
@@ -88,6 +89,16 @@ public class OrdersDTO {
     public void setNote(String note) {
         this.note = note;
     }
+
+    @Basic
+    @Column(name = "StatusID", nullable= false)
+    public int getStatusID(){
+        return statusID;
+    }
+    public void setStatusID(int statusID){
+        this.statusID = statusID;
+    }
+
 
     @Override
     public boolean equals(Object o) {

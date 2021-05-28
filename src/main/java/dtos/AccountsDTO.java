@@ -9,6 +9,7 @@ public class AccountsDTO {
     private int userId;
     private String username;
     private String password;
+    private int roleID;
     private String email;
     private String fullName;
     private Date doB;
@@ -45,6 +46,10 @@ public class AccountsDTO {
     public void setPassword(String password) {
         this.password = password;
     }
+    @Basic
+    @Column(name = "RoleID", nullable = false)
+    public int getRoleID() -> this.roleId;
+    public void setRoleId(int roleId) -> {this.roleId = roleId}
 
     @Basic
     @Column(name = "Email", nullable = false, length = 50)

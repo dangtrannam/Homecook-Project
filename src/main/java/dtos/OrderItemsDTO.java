@@ -6,6 +6,7 @@ import javax.persistence.*;
 @Table(name = "OrderItems", schema = "dbo", catalog = "homecook")
 public class OrderItemsDTO {
     private int itemId;
+    private int orderID;
     private int quantity;
     private String note;
     private double totalPrice;
@@ -21,6 +22,11 @@ public class OrderItemsDTO {
         this.itemId = itemId;
     }
 
+    @Basic
+    @Column(name = "OrderID", nullable = false)
+    public int getOrderID -> orderID;
+    public void setOrderId(int orderID) -> {this.orderID = orderID};
+    
     @Basic
     @Column(name = "Quantity", nullable = false)
     public int getQuantity() {
