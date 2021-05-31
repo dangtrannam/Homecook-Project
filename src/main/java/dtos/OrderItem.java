@@ -1,14 +1,15 @@
-package DTO;
+package dtos;
 
 public class OrderItem {
-    int ItemID, OrderID, DishID, Quantity;
+    int ItemID, OrderID, Quantity;
     String Note;
+    Dish Dish;
     double TotalPrice;
 
-    public OrderItem(int itemID, int orderID, int dishID, int quantity, String note, double totalPrice) {
+    public OrderItem(int itemID, int orderID, Dish dishItem, int quantity, String note, double totalPrice) {
         ItemID = itemID;
         OrderID = orderID;
-        DishID = dishID;
+        Dish = dishItem; 
         Quantity = quantity;
         Note = note;
         TotalPrice = totalPrice;
@@ -33,15 +34,15 @@ public class OrderItem {
         OrderID = orderID;
     }
 
-    public int getDishID() {
-        return DishID;
-    }
+    public Dish getDish() {
+		return Dish;
+	}
 
-    public void setDishID(int dishID) {
-        DishID = dishID;
-    }
+	public void setDish(Dish dish) {
+		Dish = dish;
+	}
 
-    public int getQuantity() {
+	public int getQuantity() {
         return Quantity;
     }
 
@@ -70,7 +71,7 @@ public class OrderItem {
         return "OrderItem{" +
                 "ItemID=" + ItemID +
                 ", OrderID=" + OrderID +
-                ", DishID=" + DishID +
+                ", Dish=" + Dish.getDishId() +
                 ", Quantity=" + Quantity +
                 ", Note='" + Note + '\'' +
                 ", TotalPrice=" + TotalPrice +
