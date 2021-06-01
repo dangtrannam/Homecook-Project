@@ -6,16 +6,18 @@ public class Menu {
     int MenuID;
     String MenuName;
     boolean IsServing;
+    String HomeCookName;
     ArrayList<Dish> Dishes;
 
-    public Menu(int menuID, String menuName, boolean isServing, ArrayList<Dish> dishes) {
+    public Menu() {
+    }
+
+    public Menu(int menuID, String menuName, boolean isServing, String homeCookName, ArrayList<Dish> dishes) {
         MenuID = menuID;
         MenuName = menuName;
         IsServing = isServing;
+        HomeCookName = homeCookName;
         Dishes = dishes;
-    }
-
-    public Menu() {
     }
 
     public int getMenuID() {
@@ -40,6 +42,14 @@ public class Menu {
 
     public void setServing(boolean serving) {
         IsServing = serving;
+    }
+
+    public String getHomeCookName() {
+        return HomeCookName;
+    }
+
+    public void setHomeCookName(String homeCookName) {
+        HomeCookName = homeCookName;
     }
 
     public ArrayList<Dish> getDishes() {
