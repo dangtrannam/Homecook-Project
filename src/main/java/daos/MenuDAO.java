@@ -33,7 +33,11 @@ public class MenuDAO {
                 int n = pm.executeUpdate();
                 if (n > 0) return true;
             }
-        }finally {
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
             closeConnection();
         }
         return false;
@@ -50,7 +54,11 @@ public class MenuDAO {
                 int n = pm.executeUpdate();
                 if ( n > 0) return true;
             }
-        }finally {
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
             closeConnection();
         }
         return false;
@@ -67,7 +75,11 @@ public class MenuDAO {
                 int n = pm.executeUpdate();
                 if ( n > 0) return true;
             }
-        }finally {
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
             closeConnection();
         }
         return false;
@@ -84,7 +96,11 @@ public class MenuDAO {
                 int n = pm.executeUpdate();
                 if ( n > 0) return true;
             }
-        }finally {
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
             closeConnection();
         }
         return false;
@@ -101,7 +117,11 @@ public class MenuDAO {
                 int n = pm.executeUpdate();
                 if ( n > 0) return true;
             }
-        } finally {
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
             closeConnection();
         }
         return false;
@@ -117,7 +137,11 @@ public class MenuDAO {
                 int n = pm.executeUpdate();
                 if ( n > 0) return true;
             }
-        }finally {
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
             closeConnection();
         }
         return false;
@@ -137,7 +161,11 @@ public class MenuDAO {
                         rs.getString("HomeCookName"),
                         null);
             }
-        }finally {
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
             closeConnection();
         }
         return null;
@@ -158,7 +186,11 @@ public class MenuDAO {
                         rs.getString("HomeCookName"),
                         null));
             }
-        }finally {
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
             closeConnection();
         }
         return list;
@@ -179,7 +211,11 @@ public class MenuDAO {
                         rs.getString("HomeCookName"),
                         null));
             }
-        }finally {
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
             closeConnection();
         }
         return list;
