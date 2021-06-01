@@ -87,7 +87,7 @@ public class UserDAO {
 			
 			prstm.setString(1, input.getUsername());
 			prstm.setString(2, input.getPassword());
-			prstm.setInt(3,  input.getRoleID(input.getRole()));
+			prstm.setInt(3,  input.getRoleID("Customer"));
 			prstm.setString(4, input.getEmail());
 			prstm.setString(5, input.getFullName());
 			prstm.setDate(6, java.sql.Date.valueOf(input.getDoB()));
