@@ -2,13 +2,15 @@ package dtos;
 
 public class Dish {
     int DishId;
+    int HomeCookID;
     String DishName;
     double Price;
     boolean IsAvailable;
     String Description, ImageURL;
 
-    public Dish(int dishId, String dishName, double price, boolean isAvailable, String description, String imageURL) {
+    public Dish(int dishId, int HomeCookID, String dishName, double price, boolean isAvailable, String description, String imageURL) {
         DishId = dishId;
+        this.HomeCookID = HomeCookID;
         DishName = dishName;
         Price = price;
         IsAvailable = isAvailable;
@@ -16,7 +18,22 @@ public class Dish {
         ImageURL = imageURL;
     }
 
-    public Dish() {
+    public Dish(int homeCookID, String dishName, double price, boolean isAvailable, String description, String imageURL) {
+        DishId = 0;
+        HomeCookID = homeCookID;
+        DishName = dishName;
+        Price = price;
+        IsAvailable = isAvailable;
+        Description = description;
+        ImageURL = imageURL;
+    }
+
+    public int getHomeCookID() {
+        return HomeCookID;
+    }
+
+    public void setHomeCookID(int homeCookID) {
+        HomeCookID = homeCookID;
     }
 
     public int getDishId() {
