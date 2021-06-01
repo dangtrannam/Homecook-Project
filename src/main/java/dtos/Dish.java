@@ -1,4 +1,4 @@
-package DTO;
+package dtos;
 
 public class Dish {
     int DishId;

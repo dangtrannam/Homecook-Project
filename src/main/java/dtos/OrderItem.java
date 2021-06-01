@@ -1,4 +1,4 @@
-package DTO;
+package dtos;
 
 public class OrderItem {
     int ItemID, OrderID, DishID, Quantity;
