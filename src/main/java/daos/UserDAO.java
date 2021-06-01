@@ -50,10 +50,8 @@ public class UserDAO {
 					+ "FROM Accounts "
 					+ "WHERE UserName = ? AND Password = ?";
 			PreparedStatement prstm = conn.prepareStatement(query);
-			
 			prstm.setString(1, username);
 			prstm.setString(2,  password);
-			
 			ResultSet rs = prstm.executeQuery();
 			
 			while (rs.next()) {
