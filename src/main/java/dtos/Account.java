@@ -1,11 +1,24 @@
 package dtos;
 
-public class Account {
-    int UserID;
-    String Username, Password, Role, Email, FullName, DoB, Address, PhoneNumber;
-    boolean IsActive;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
-    public Account(int userID, String username, String password, String role, String email, String fullName, String doB, String address, String phoneNumber, boolean isActive) {
+public class Account {
+    private int UserID;
+    private String Username, Password, Role, Email, FullName, Address, PhoneNumber;
+    private boolean IsActive;
+    java.util.Date DoB;
+    private Map<Integer, String> roleTable = new HashMap<Integer, String>();
+
+    //Initiate the roles in the table: 
+    {
+    	roleTable.put(1, "Customer");
+    	roleTable.put(2, "HomeCook");
+    	roleTable.put(3, "Admin");
+    }
+    
+    public Account(int userID, String username, String password, String role, String email, String fullName, java.util.Date doB, String address, String phoneNumber, boolean isActive) {
         UserID = userID;
         Username = username;
         Password = password;
@@ -70,10 +83,10 @@ public class Account {
     }
 
     public String getDoB() {
-        return DoB;
+        return String.valueOf(DoB);
     }
 
-    public void setDoB(String doB) {
+    public void setDoB(Date doB) {
         DoB = doB;
     }
 
@@ -115,5 +128,21 @@ public class Account {
                 ", PhoneNumber='" + PhoneNumber + '\'' +
                 ", IsActive=" + IsActive +
                 '}';
+    }
+    
+    public void addRole(int roleID, String roleName) {
+    	roleTable.put(roleID, roleName);
+    }
+    
+    public String getRoleName(int roleID) {
+    	return roleTable.get(roleID);
+    }
+    
+    public int getRoleID(String role) {
+    	for (Integer key : roleTable.keySet()) {
+			if(role.equals(roleTable.get(key)))
+				return key.intValue();
+		}
+    	return 0;
     }
 }
