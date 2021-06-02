@@ -1,19 +1,34 @@
 package dtos;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Order {
-    int OrderID, TimeStamp;
-    String ReceiverPhone, ReceiverAddress, ReceiverName, Note;
+    int OrderID, HomeCookID, CustomerID;
+    Date TimeStamp;
+    String ReceiverPhone, ReceiverAddress, ReceiverName, Note, Status;
     double Total;
     ArrayList<OrderItem> OrderItems;
-    Map<Integer, String> Status;
+    Map<Integer, String> statusTable= new HashMap<>();
+    //Status table
+    {
+        statusTable.put(1, "Pending");
+        statusTable.put(2, "Accept");
+        statusTable.put(3, "Delivering");
+        statusTable.put(4, "Delivering");
+        statusTable.put(5, "Finished");
+        statusTable.put(6, "Rejected");
+        statusTable.put(7, "Cancelled");
+    }
 
-    public Order(int orderID, int timeStamp, Map<Integer, String> status, String receiverPhone,
+    public Order(int orderID, int homecookID, int customerID, Date timeStamp, String status, String receiverPhone,
                  String receiverAddress,
                  String receiverName, double total, String note, ArrayList<OrderItem> orderItems) {
         OrderID = orderID;
+        HomeCookID=  homecookID;
+        CustomerID= customerID;
         TimeStamp= timeStamp;
         Status= status;
         ReceiverPhone= receiverPhone;
@@ -24,7 +39,25 @@ public class Order {
         OrderItems= orderItems;
     }
 
+    public Order(int orderID, Date timeStamp, String status, double total, String note) {
+        this.OrderID= orderID;
+        this.TimeStamp= timeStamp;
+        this.Status= status;
+        this.Total= total;
+        this.Note= note;
+    }
     public Order() {
+        OrderID = 0;
+        HomeCookID= 0;
+        CustomerID= 0;
+        TimeStamp= null;
+        Status= null;
+        ReceiverPhone= null;
+        ReceiverAddress= null;
+        ReceiverName= null;
+        Total= 0;
+        Note= null;
+        OrderItems= null;
     }
 
     public int getOrderID() {
@@ -35,13 +68,35 @@ public class Order {
         OrderID = orderID;
     }
 
-    public int getTimeStamp() {
+    public int getHomeCookID() {
+        return HomeCookID;
+    }
+
+    public void setHomeCookID(int homeCookID) {
+        HomeCookID = homeCookID;
+    }
+
+    public int getCustomerID() {
+        return CustomerID;
+    }
+
+    public void setCustomerID(int customerID) {
+        CustomerID = customerID;
+    }
+
+    public Date getTimeStamp() {
         return TimeStamp;
     }
 
-    public void setTimeStamp(int timeStamp) {
+    public void setTimeStamp(Date timeStamp) {
         TimeStamp = timeStamp;
     }
+
+    public void setStatus(String status) {
+        Status = status;
+    }
+
+    public String getStatus() { return Status; }
 
     public String getReceiverPhone() {
         return ReceiverPhone;
@@ -91,17 +146,9 @@ public class Order {
         OrderItems = orderItems;
     }
 
-    public Map<Integer, String> getStatus() {
-        return Status;
-    }
-
-    public void setStatus(Map<Integer, String> status) {
-        Status = status;
-    }
-
     @Override
     public String toString() {
-        return "Order{" +
+        return "\nOrder{" +
                 "OrderID=" + OrderID +
                 ", TimeStamp=" + TimeStamp +
                 ", ReceiverPhone='" + ReceiverPhone + '\'' +
@@ -112,5 +159,14 @@ public class Order {
                 ", OrderItems=" + OrderItems +
                 ", Status=" + Status +
                 '}';
+    }
+    public String getStatusName(int statusID) {return statusTable.get(statusID);}
+
+    public int getStatusID(String statusName) {
+        for (Integer key : statusTable.keySet()) {
+            if (statusName.equals(statusTable.get(key)))
+                return key.intValue();
+        }
+        return 0;
     }
 }
