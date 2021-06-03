@@ -16,6 +16,12 @@ public class OrderItem {
     }
 
     public OrderItem() {
+        this.ItemID=0;
+        this.OrderID=0;
+        this.Dish= null;
+        this.Quantity=0;
+        this.Note= "";
+        this.TotalPrice=0;
     }
 
     public int getItemID() {
@@ -68,7 +74,7 @@ public class OrderItem {
 
     @Override
     public String toString() {
-        return "OrderItem{" +
+        return "\nOrderItem{" +
                 "ItemID=" + ItemID +
                 ", OrderID=" + OrderID +
                 ", Dish=" + Dish.getDishId() +

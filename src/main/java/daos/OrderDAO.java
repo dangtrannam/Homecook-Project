@@ -1,6 +1,7 @@
 package daos;
 
 import Utils.DBContext;
+import dtos.Dish;
 import dtos.Order;
 import dtos.OrderItem;
 
@@ -12,49 +13,60 @@ public class OrderDAO {
     Connection conn= null;
     PreparedStatement ps= null;
     ResultSet rs= null;
+    public void closeConnection() throws SQLException {
+        if (rs != null) {
+            rs.close();
+        }
+        if (ps != null) {
+            ps.close();
+        }
+        if (conn != null) {
+            conn.close();
+        }
+    }
 
     //Lay order cua customer (Customer View)
     public ArrayList<Order> getOrderByCustomerID(int customerID) throws SQLException {
         ArrayList<Order> list= new ArrayList<>();
-        String query= "SELECT OrderID, TimeStamp, StatusID, Note, Total FROM Orders WHERE CustomerID=?";
+        String query= "SELECT OrderID, TimeStamp, StatusID, Note, Total, ReceiverPhone, ReceiverAddress, ReceiverName  FROM Orders WHERE CustomerID=?";
         try {
             conn= new DBContext().makeConnection();
-            ps= conn.prepareStatement(query);
-            ps.setInt(1, customerID);
-            rs= ps.executeQuery();
-            while (rs.next()) {
-                Order ord= new Order(0, null , null, 0, null);
-                int orderID= rs.getInt("OrderID");
-                //Doi tu sql Timestamp qua Date java
-                java.sql.Timestamp tmpTime= new Timestamp(rs.getTimestamp("TimeStamp").getTime());
-                java.util.Date timeStamp= new Date(tmpTime.getTime());
-                //chuyen tu status id => name
-                String status= ord.getStatusName(rs.getInt("StatusID"));
-                double total= rs.getDouble("Total");
-                String note= rs.getString("Note");
+            if (conn != null) {
+                ps= conn.prepareStatement(query);
+                ps.setInt(1, customerID);
+                rs= ps.executeQuery();
+                while (rs.next()) {
+                    Order ord= new Order();
+                    int orderID= rs.getInt("OrderID");
+                    //Doi tu sql Timestamp qua Date java
+                    java.sql.Timestamp tmpTime= new Timestamp(rs.getTimestamp("TimeStamp").getTime());
+                    java.util.Date timeStamp= new Date(tmpTime.getTime());
+                    //chuyen tu status id => name
+                    String status= ord.getStatusName(rs.getInt("StatusID"));
+                    double total= rs.getDouble("Total");
+                    String note= rs.getString("Note");
+                    String phone= rs.getString("ReceiverPhone");
+                    String address= rs.getString("ReceiverAddress");
+                    String name= rs.getString("ReceiverName");
 
-                ord.setOrderID(orderID);
-                ord.setTimeStamp(timeStamp);
-                ord.setStatus(status);
-                ord.setTotal(total);
-                ord.setNote(note);
+                    ord.setOrderID(orderID);
+                    ord.setTimeStamp(timeStamp);
+                    ord.setStatus(status);
+                    ord.setTotal(total);
+                    ord.setNote(note);
+                    ord.setReceiverPhone(phone);
+                    ord.setReceiverAddress(address);
+                    ord.setReceiverName(name);
 
-                list.add(ord);
+                    list.add(ord);
+                }
                 return list;
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
         finally {
-            if (rs != null) {
-                rs.close();
-            }
-            if (ps != null) {
-                ps.close();
-            }
-            if (conn != null) {
-                conn.close();
-            }
+            closeConnection();
         }
         return null;
     }
@@ -64,82 +76,42 @@ public class OrderDAO {
         String query= "SELECT OrderID, TimeStamp, StatusID, Note, Total FROM Orders WHERE HomeCookID=?";
         try {
             conn= new DBContext().makeConnection();
-            ps= conn.prepareStatement(query);
-            ps.setInt(1, homecookID);
-            rs= ps.executeQuery();
-            while (rs.next()) {
-                Order ord= new Order(0, null , null, 0, null);
-                int orderID= rs.getInt("OrderID");
-                //Doi tu sql Timestamp qua Date java
-                java.sql.Timestamp tmpTime= new Timestamp(rs.getTimestamp("TimeStamp").getTime());
-                java.util.Date timeStamp= new Date(tmpTime.getTime());
-                //chuyen tu status id => name
-                String status= ord.getStatusName(rs.getInt("StatusID"));
-                double total= rs.getDouble("Total");
-                String note= rs.getString("Note");
+            if (conn != null) {
+                ps= conn.prepareStatement(query);
+                ps.setInt(1, homecookID);
+                rs= ps.executeQuery();
+                while (rs.next()) {
+                    Order ord= new Order(0, null , null, 0, null);
+                    int orderID= rs.getInt("OrderID");
+                    //Doi tu sql Timestamp qua Date java
+                    java.sql.Timestamp tmpTime= new Timestamp(rs.getTimestamp("TimeStamp").getTime());
+                    java.util.Date timeStamp= new Date(tmpTime.getTime());
+                    //chuyen tu status id => name
+                    String status= ord.getStatusName(rs.getInt("StatusID"));
+                    double total= rs.getDouble("Total");
+                    String note= rs.getString("Note");
 
-                ord.setOrderID(orderID);
-                ord.setTimeStamp(timeStamp);
-                ord.setStatus(status);
-                ord.setTotal(total);
-                ord.setNote(note);
+                    ord.setOrderID(orderID);
+                    ord.setTimeStamp(timeStamp);
+                    ord.setStatus(status);
+                    ord.setTotal(total);
+                    ord.setNote(note);
 
-                list.add(ord);
+                    list.add(ord);
+                }
                 return list;
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
         finally {
-            if (rs != null) {
-                rs.close();
-            }
-            if (ps != null) {
-                ps.close();
-            }
-            if (conn != null) {
-                conn.close();
-            }
-        }
-        return null;
-    }
-    //Admin lay all order
-    public ArrayList<Order> getAllHomeCookOrder(int adminID) {
-        ArrayList<Order> list= new ArrayList<>();
-        String query= "SELECT * FROM Orders";
-        try {
-            conn= new DBContext().makeConnection();
-            ps= conn.prepareStatement(query);
-            rs= ps.executeQuery();
-
-            while (rs.next()) {
-                Order ord= new Order();
-
-                int ordID= rs.getInt("OrderID");
-                int homecookID= rs.getInt("HomeCookID");
-                int customerID=rs.getInt("CustomerID");
-                // //Doi tu sql Timestamp qua Date java
-                java.sql.Timestamp tmpTime= new Timestamp(rs.getTimestamp("TimeStamp").getTime());
-                java.util.Date timeStamp= new Date(tmpTime.getTime());
-                //chuyen tu status id => name
-                String status= ord.getStatusName(rs.getInt("StatusID"));
-                String cusPhone= rs.getString("ReceiverPhone");
-                String cusAdd= rs.getString("ReceiverAddress");
-                String cusName= rs.getString("ReceiverName");
-                double total= rs.getDouble("Total");
-                String note= rs.getString("Note");
-
-                ord.setOrderID(ordID);
-                //Dung o day mai viet tiep
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            closeConnection();
         }
         return null;
     }
 
     //Khi lay date tu object ve thi phai convert sang string de goi ham nay
-    public ArrayList<Order> getOrderByTime (String fromDate, String toDate) {
+    public ArrayList<Order> getOrderByTime (String fromDate, String toDate) throws SQLException {
         ArrayList<Order> list= new ArrayList<>();
         String query= "SELECT OrderID, TimeStamp, StatusID, Total, Note FROM Orders WHERE TimeStamp BETWEEN ? AND ?";
 
@@ -174,8 +146,9 @@ public class OrderDAO {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
-
+        finally {
+            closeConnection();
+        }
         return null;
     }
 
@@ -197,20 +170,12 @@ public class OrderDAO {
             throwables.printStackTrace();
         }
         finally {
-            if (rs != null) {
-                rs.close();
-            }
-            if (ps != null) {
-                ps.close();
-            }
-            if (conn != null) {
-                conn.close();
-            }
+            closeConnection();
         }
         return false;
     }
 
-    public boolean createOrderItem(Order ord) {
+    public boolean createOrderItem(Order ord) throws SQLException {
         String query="INSERT INTO OrderItems (OrderID, DishID, Quantity, Note, TotalPrice) VALUES (?,?,?,?,?)";
         try {
             conn= new DBContext().makeConnection();
@@ -234,9 +199,12 @@ public class OrderDAO {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        finally {
+            closeConnection();
+        }
         return false;
     }
-    public boolean createNewOrder(Order ord) {
+    public boolean createNewOrder(Order ord) throws SQLException {
         int statusID= ord.getStatusID(ord.getStatus());
         java.util.Date objDate= new java.util.Date(ord.getTimeStamp().getTime());
         java.sql.Timestamp timeStamp= new java.sql.Timestamp(objDate.getTime());
@@ -264,11 +232,81 @@ public class OrderDAO {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        finally {
+            closeConnection();
+        }
         return false;
     }
 
+    //Customer xem item trong ord
+    public ArrayList<OrderItem> getOrderItemByCustomer (int ordID) throws SQLException {
+        ArrayList<OrderItem> list= new ArrayList<>();
+        String query= "SELECT i.ItemID, i.DishID, i.OrderID, d.DishID, i.Quantity, i.Note, i.TotalPrice, d" +
+                ".HomeCookID, d" +
+                ".DishName, d" +
+                ".Price, d.ImageURL\n" +
+                "FROM OrderItems i, Dishes d \n" +
+                "WHERE i.DishID= d.DishID AND i.OrderID= ?";
+        try {
+            conn= new DBContext().makeConnection();
+            if (conn != null) {
+                ps= conn.prepareStatement(query);
+                ps.setInt(1, ordID);
+                rs= ps.executeQuery();
+            }
+            while (rs.next()) {
+                Dish dish= new Dish(rs.getInt("DishID"), rs.getInt("HomeCookID"), rs.getString("DishName"),
+                        rs.getDouble("Price"), rs.getString("ImageURL"));
+                list.add(new OrderItem(rs.getInt("ItemID"), rs.getInt("OrderID"), dish, rs.getInt("Quantity"),
+                        rs.getString("Note"), rs.getDouble("TotalPrice")));
+            }
+            return list;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        finally {
+            closeConnection();
+        }
+        return null;
+    }
+    //HomeCook xem item trong ord
+    public ArrayList<OrderItem> getOrderItemByHomeCook (Order ord) throws SQLException {
+        ArrayList<OrderItem> list= new ArrayList<>();
+        String query= "SELECT i.ItemID, i.DishID, i.OrderID, d.DishID, i.Quantity, i.Note, i.TotalPrice, d.HomeCookID, d.DishName, d.Price, d.ImageURL\n" +
+                "from OrderItems i, Dishes d\n" +
+                "where i.DishID= d.DishID and HomeCookID=? and i.OrderID=?";
+        try {
+            conn= new DBContext().makeConnection();
+            if (conn != null) {
+                ps= conn.prepareStatement(query);
+                ps.setInt(1, ord.getHomeCookID());
+                ps.setInt(2, ord.getOrderID());
+                rs= ps.executeQuery();
+                while (rs.next()) {
+                    OrderItem item= new OrderItem();
+                    Dish dish= new Dish(rs.getInt("DishID"), rs.getInt("HomeCookID"), rs.getString("DishName"),
+                            rs.getDouble("Price"), rs.getString("ImageURL"));
+                    int quantity= rs.getInt("Quantity");
+                    String note= rs.getString("Note");
+                    double totalPrice= rs.getDouble("TotalPrice");
+                    item.setQuantity(quantity);
+                    item.setNote(note);
+                    item.setTotalPrice(totalPrice);
+                    list.add(item);
+                }
+                return list;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        finally {
+            closeConnection();
+        }
+        return null;
+    }
     public static void main(String[] args) throws SQLException {
         OrderDAO dao= new OrderDAO();
-        System.out.println(dao.getOrderByHomeCookID(5));
+        System.out.println(dao.getOrderItemByCustomer(4));
+
     }
 }

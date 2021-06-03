@@ -27,6 +27,14 @@ public class Dish {
         Description = description;
         ImageURL = imageURL;
     }
+    //Huy dung cho OrderDAO
+    public Dish(int dishId, int homeCookID, String dishName, double price, String imgURL) {
+        this.DishId= dishId;
+        this.HomeCookID= homeCookID;
+        this.DishId= dishId;
+        this.Price= price;
+        this.ImageURL= imgURL;
+    }
 
     public int getHomeCookID() {
         return HomeCookID;
