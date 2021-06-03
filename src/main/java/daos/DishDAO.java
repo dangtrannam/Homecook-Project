@@ -73,33 +73,8 @@ public class DishDAO {
         }
         return list;
     }
-    public List<Dish> getAllDishesByOrderID(int orderID) throws SQLException {
-        String sql = "select  D.DishID, D.HomeCookID, D.DishName, D.Price , D.IsAvailable, D.Description, D.ImageURL\n" +
-                "from Dishes D INNER JOIN OrderItems O\n" +
-                "    on D.DishID = O.DishID\n" +
-                "where O.OrderID = ?";
-        ArrayList<Dish> list = new ArrayList<>();
-        try{
-            con = DBContext.makeConnection();
-            if (con != null){
-                pm = con.prepareStatement(sql);
-                pm.setInt(1, orderID);
-                rs = pm.executeQuery();
-                while (rs.next()){
-                    list.add(new Dish(rs.getInt("DishID"),
-                            rs.getInt("HomeCookID"),
-                            rs.getString("DishName"),
-                            rs.getDouble("Price"),
-                            rs.getBoolean("IsAvailable"),
-                            rs.getString("Description"),
-                            rs.getString("ImageURL")));
-                }
-            }
-        }finally {
-            closeConnection();
-        }
-        return list;
-    }
+
+
 
     public Dish getDishByID(int DishID) throws  SQLException{
         Dish result = null;
@@ -165,6 +140,24 @@ public class DishDAO {
         }
         return false;
     }
+
+    public boolean deleteDish(int DishID) throws SQLException{
+        String sql ="DELETE from Dishes WHERE DishID =?";
+        try{
+            con = DBContext.makeConnection();
+            if(con != null){
+                pm = con.prepareStatement(sql);
+                pm.setInt(1, DishID);
+                int n = pm.executeUpdate();
+                if( n > 0) return true;
+            }
+        }finally{
+            closeConnection();
+        }
+
+        return false;
+    }
+
 
     public boolean changeDishStatus(int DishID, boolean input) throws SQLException {
         String sql = "UPDATE Dishes SET IsAvailable = ? WHERE DishID= ?";
