@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import Utils.DBContext;
 import dtos.Account;
@@ -13,7 +14,7 @@ public class UserDAO {
 		try {
 			Account result = new Account();
 			Connection conn = DBContext.makeConnection();
-			String query = "SELECT Username, Password, RoleID, Email, FullName, DoB, Address, PhoneNumber, IsActive "
+			String query = "SELECT UserID, Username, Password, RoleID, Email, FullName, DoB, Address, PhoneNumber, IsActive "
 					+ "FROM Accounts "
 					+ "WHERE UserID = ?";
 			PreparedStatement prstm = conn.prepareStatement(query);
@@ -33,6 +34,7 @@ public class UserDAO {
 				result.setActive(rs.getBoolean("IsActive"));
 				result.setRole(result.getRoleName(rs.getInt("RoleID")));
 			}
+			conn.close();
 			return result;
 		}
 		catch (Exception e) {
@@ -46,7 +48,7 @@ public class UserDAO {
 			Account result = new Account();
 			Connection conn = DBContext.makeConnection();
 			String query = 
-					"SELECT Username, Password, RoleID, Email, FullName, DoB, Address, PhoneNumber, IsActive "
+					"SELECT UsesrID, Username, Password, RoleID, Email, FullName, DoB, Address, PhoneNumber, IsActive "
 					+ "FROM Accounts "
 					+ "WHERE UserName = ? AND Password = ?";
 			PreparedStatement prstm = conn.prepareStatement(query);
@@ -69,6 +71,7 @@ public class UserDAO {
 				result.setActive(rs.getBoolean("IsActive"));
 				result.setRole(result.getRoleName(rs.getInt("RoleID")));
 			}
+			conn.close();
 			return result;
 		}
 		catch (Exception e) {
@@ -128,5 +131,43 @@ public class UserDAO {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	public ArrayList<Account> getAllCustomers(){
+		try {
+			ArrayList<Account> result = new ArrayList<Account>();
+			Account tempoResult = new Account();
+			Connection conn = DBContext.makeConnection();
+		
+			String query = "SELECT UserID, Username, Password, RoleID, Email, FullName, DoB, Address, PhoneNumber, IsActive "
+					+ "FROM Accounts "
+					+ "WHERE RoleID = ?";
+		
+			PreparedStatement prstm = conn.prepareStatement(query);
+			prstm.setInt(1, tempoResult.getRoleID("Customer"));
+			ResultSet rs = prstm.executeQuery();
+		
+			while (rs.next()) {
+				tempoResult.setUserID(rs.getInt("UserID"));
+				tempoResult.setUsername(rs.getString("Username"));
+				tempoResult.setPassword(rs.getString("Password"));
+				tempoResult.setFullName(rs.getString("FullName"));
+				tempoResult.setEmail(rs.getString("Email"));
+				tempoResult.setDoB(
+					new java.util.Date(rs.getDate("DoB").getTime()));
+				tempoResult.setAddress(rs.getString("Address"));
+				tempoResult.setPhoneNumber(rs.getString("PhoneNumber"));
+				tempoResult.setActive(rs.getBoolean("IsActive"));
+				tempoResult.setRole(tempoResult.getRoleName(rs.getInt("RoleID")));
+			
+				result.add(tempoResult);
+			}
+			conn.close();
+			return result;
+		}		
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

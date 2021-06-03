@@ -15,7 +15,7 @@ public class HomeCookDAO {
 			Account tempoResult = new Account();
 			Connection conn = DBContext.makeConnection();
 			
-			String query = "SELECT Username, Password, RoleID, Email, FullName, DoB, Address, PhoneNumber, IsActive "
+			String query = "SELECT UserID, Username, Password, RoleID, Email, FullName, DoB, Address, PhoneNumber, IsActive "
 					+ "FROM Accounts "
 					+ "WHERE RoleID = ?";
 			
@@ -38,6 +38,7 @@ public class HomeCookDAO {
 				
 				result.add(tempoResult);
 			}
+			conn.close();
 			return result;
 		}		
 		catch (Exception e) {
