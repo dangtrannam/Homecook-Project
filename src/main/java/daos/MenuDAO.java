@@ -148,7 +148,7 @@ public class MenuDAO {
     }
 
     public Menu getMenuByID(int ID) throws SQLException {
-        String sql = "SELECT MenuName, IsServing,HomeCookName WHERE MenuID= ?";
+        String sql = "SELECT MenuName, IsServing,HomeCookName FROM Menus WHERE MenuID= ?";
         try{
             con = DBContext.makeConnection();
             if (con != null){
@@ -173,7 +173,7 @@ public class MenuDAO {
 
     public List<Menu> getAllMenusByHomeCookID(int ID) throws SQLException {
         List list = new ArrayList<Menu>();
-        String sql = "SELECT MenuID , MenuName, IsServing,HomeCookName WHERE HomeCookID= ?";
+        String sql = "SELECT MenuID , MenuName, IsServing,HomeCookName FROM Menus WHERE HomeCookID= ?";
         try{
             con = DBContext.makeConnection();
             if (con != null){
@@ -197,7 +197,7 @@ public class MenuDAO {
     }
     public List<Menu> getAllMenusByHomeCookIDAndStatus(int ID,boolean isServing) throws SQLException {
         List list = new ArrayList<Menu>();
-        String sql = "SELECT MenuID , MenuName,HomeCookName WHERE HomeCookID= ? AND IsServing=?";
+        String sql = "SELECT MenuID , MenuName,HomeCookName FROM Menus WHERE HomeCookID= ? AND IsServing=?";
         try{
             con = DBContext.makeConnection();
             if (con != null){
@@ -221,6 +221,27 @@ public class MenuDAO {
         return list;
     }
 
+    public List<Dish> getAllDishesInMenu(int menuID) throws SQLException {
+        List list = new ArrayList<Dish>();
+        String sql = "SELECT DishID FROM DishIn WHERE MenuID=?";
+        try{
+            con = DBContext.makeConnection();
+            if (con != null){
+                pm = con.prepareStatement(sql);
+                pm.setInt(1, menuID);
+                rs = pm.executeQuery();
+                DishDAO dishDAO=new DishDAO();
+                while(rs.next()) list.add(dishDAO.getDishByID(rs.getInt("DishID")));
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            closeConnection();
+        }
+        return list;
+    }
 
 
 
