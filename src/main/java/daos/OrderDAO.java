@@ -1006,6 +1006,12 @@ public class OrderDAO {
         return null;
     }
 
+    //----------------
+//    public void checkOrder (Timestamp currentDay, String userId, String role) {
+//
+//    }
+
+    //-------------
     public static void main(String[] args) throws ParseException, SQLException {
         OrderDAO dao = new OrderDAO();
 
@@ -1021,7 +1027,7 @@ public class OrderDAO {
         Timestamp OD= Timestamp.from(od);
         System.out.println(TS);
         System.out.println(OD);
-        System.out.println(dao.getTotalOrderByWeekAdmin());
+        System.out.println(dao.getOrderByHomeCookIDAndStatus("149DFF8E-7EB7-40A9-BE27-B89DBA92AEAA", "", 1,1));
 //
     }
 }
