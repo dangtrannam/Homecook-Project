@@ -5,7 +5,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
 
-@ApplicationPath("/")
+@ApplicationPath("/api")
 public class MainApplication extends Application {
 
 }
